@@ -13,20 +13,9 @@ class App1 extends React.Component {
 
   fetchPosts() {
     // The API where we're fetching data from
-    const requestOptions = {
-      method: 'POST',
-      mode: 'no-cors' ,
-      headers: {
-        'Access-Control-Allow-Credentials' : true,
-        'Access-Control-Allow-Origin':'*',
-        'Access-Control-Allow-Methods':'POST',
-        'Access-Control-Allow-Headers':'application/json',
-        "Content-type":"application/json"
-      
-     } ,
-      body: JSON.stringify({ email: 'sushil1@gmail.com',password:"1234" })
-  };
-    fetch('https://ab1232.herokuapp.com/signup',requestOptions)
+    const a=JSON.stringify({ email: 'sushil1@gmail.com',password:"1234" });
+   
+    fetch('https://ab1232.herokuapp.com/signup',{ method:"POST",headers:{'Content-type': 'application/json',"Accept":"application/json"},body:a})
     .then(response => response.json())
     .then(json => console.log(json))
   }

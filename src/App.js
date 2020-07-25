@@ -26,7 +26,7 @@ class App1 extends React.Component {
      } ,
       body: JSON.stringify({ email: 'sushil1@gmail.com',password:"1234" })
   };
-    fetch('https://ab1232.herokuapp.com/users')
+    fetch('https://ab1232.herokuapp.com/signup',requestOptions)
     .then(response => response.json())
     .then(json => console.log(json))
   }

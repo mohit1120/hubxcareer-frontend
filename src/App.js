@@ -13,20 +13,22 @@ class App1 extends React.Component {
 
   fetchPosts() {
     // The API where we're fetching data from
-    fetch(`https://ab1232.herokuapp.com/`)
-      // We get a response and receive the data in JSON format...
-      .then(response => response.json())
-      // ...then we update the state of our application
-      .then(
-        data =>{
-          console.log('hey')
-          this.setState({
-            posts: data,
-            isLoading: false,
-          })}
-      )
-      // If we catch errors instead of a response, let's update the app
-      .catch(error => this.setState({ error, isLoading: false }));
+    const requestOptions = {
+      method: 'POST',
+      mode: 'no-cors' ,
+      headers: {
+        'Access-Control-Allow-Credentials' : true,
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Methods':'POST',
+        'Access-Control-Allow-Headers':'application/json',
+        "Content-type":"application/json"
+      
+     } ,
+      body: JSON.stringify({ email: 'sushil1@gmail.com',password:"1234" })
+  };
+    fetch('https://ab1232.herokuapp.com/users')
+    .then(response => response.json())
+    .then(json => console.log(json))
   }
   
 

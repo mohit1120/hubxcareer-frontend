@@ -10,25 +10,10 @@ class Login extends React.Component {
           username: '',
           password: '',
           success:false,
+          error:''
         };
       }
   
-
- 
-//   componentDidMount() {
-//     this.fetchPosts();
-//   }
-
-//   fetchPosts() {
-//     // The API where we're fetching data from
-//     const a=JSON.stringify({ email: 'sushil11123411111111111@gmail.com',password:"1234" });
-   
-//     fetch('https://ab1232.herokuapp.com/signup',{ method:"POST",headers:{'Content-type': 'application/json',"Accept":"application/json"},body:a})
-//     .then(response => response.json())
-//     .then(json => console.log(json))
-//   }
-   
-
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -36,20 +21,24 @@ class Login extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
     const { username, password } = this.state;
-    const a=JSON.stringify({ email: username,password: password });
-    fetch('https://ab1232.herokuapp.com/login',{ method:"POST",headers:{'Content-type': 'application/json',"Accept":"application/json"},body:a})
+    const data=JSON.stringify({ email: username,password: password });
+    fetch('https://ab1232.herokuapp.com/login',{ method:"POST",headers:{'Content-type': 'application/json',"Accept":"application/json","cors":'no',"Access-Control-Allow-Origin":'*'},body:data})
     .then(response => response.json())
-    .then(json => {const {success,token,user_info}=json;
-    this.setState({ success: success});
+    .then(json => {const {success,message,token,user_info}=json;
+    this.setState({ success: success,message:message});
+    if(message){
+        alert(message);
+    }
+    if(success){
     const cookies = new Cookies();
-cookies.set('token', json.token, { path: '/' });
-cookies.set('loggedIn', true, { path: '/' });
-
-
-    }) 
+    cookies.set('token', json.token, { path: '/' },{ httpOnly: true });
+    cookies.set('loggedIn', true, { path: '/' });
+    cookies.set('email', user_info[0].email);
+    console.log('hi');
+    window.location.href ='/'
+    }
+    }); 
 }
-
-  
     render() {
         const {username, password } = this.state;
         return (

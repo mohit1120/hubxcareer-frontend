@@ -2,10 +2,10 @@ import React from 'react';
 import './style.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
-import Header from  '../../Header';
-import {isLoggedIn,Logout} from '../../shared/utility';
+import Header from  '../../../Header';
+import Cookies from 'universal-cookie';
 
-class Events extends React.Component{
+class MyEvent extends React.Component{
 
     state = {
         isLoading: true,
@@ -39,10 +39,9 @@ class Events extends React.Component{
     
     }
       fetchEvents() {
-        // The API where we're fetching data from
-        
-       
-        fetch('https://ab1232.herokuapp.com/eventlist',{ method:"GET",headers:{'Content-type': 'application/json',"Accept":"application/json"}})
+        const cookies = new Cookies();
+        const data = cookies.get('email');
+        fetch('https://ab1232.herokuapp.com/event?email='+data,{ method:"GET",headers:{'Content-type': 'application/json',"Accept":"application/json"}})
         .then(response => response.json())
         .then(json => {
 
@@ -55,8 +54,6 @@ class Events extends React.Component{
       }
 
       render(){
-if(!isLoggedIn)
-window.location.href="/";
       return  <>
       <Header/>
       {this.state.isLoading &&  (<div style={{margin:'auto',textAlign:'center' }}> <Loader
@@ -69,7 +66,8 @@ window.location.href="/";
          </div>)
  
       }
-      {!this.state.isLoading && this.getEventList()}</>
+      {!this.state.isLoading && this.state.events.length && this.getEventList()}
+      {(!this.state.isLoading) && (this.state.events.length==0) && (<h2>no event found</h2>)}</>
       }
 
 
@@ -77,4 +75,6 @@ window.location.href="/";
 
 
 
-export default Events;
+
+
+export default MyEvent;

@@ -24,7 +24,7 @@ Tech stack used
 api end points are designed for login, signup, get all events, create events and correspomding api integrated to frontend 
 
 Backend Repo Link : 
-
+https://github.com/mohit1120/hubxcareerbackend
 
 
 ##Frontend Portal link##
